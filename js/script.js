@@ -7,27 +7,24 @@ $(document).ready(function() {
 function getData() {
 	$.getJSON("js/baseballcard.json", function(data, error) { 
 		playerData = data;
-		drawStuff(); 
+		drawChart(); 
 	});
 }
 
-function drawStuff() {
 
-	var playerName = playerData.name;
-	var playerTeam = playerData.club; 
-	var playerStats = playerData.stats;
-	var firstSeasonIndex = playerStats.length -10; 
+function drawChart() {
+	$(".playerName").html(playerData.name);
 
-	var firstSeasonStats = playerData.stats[firstSeasonIndex];
-	var firstSeasonStolenBases = firstSeasonStats.SB;
-	var firstSeasonYear = firstSeasonStats.year;
-	var firstSeasonTeam = firstSeasonStats.club;
+	$.each(playerData.stats, function(i, item) {
+		var width = item.HR * 10;
+		$(".chart").append(
+			"<div class='col-md-12 bar-container'>"+
+			"<div class='year'>"+item.year+"</div>"+
+			"<div class='bar' style='width: "+width+"px'></div>"+
+			"<div class='total'>"+item.HR+"</div>"+
+		"</div>"
+)})}
 
-	$(".chart").append("<h1>"+playerName+"</h1>");
-	$(".chart").append("<h3>"+playerTeam+"</h3>");
-	$(".chart").append("<p>During "+firstSeasonYear+", "+playerName+" stole "+firstSeasonStolenBases+" bases for the "+firstSeasonTeam+" ... lol.");
-
-}
 
 
 
